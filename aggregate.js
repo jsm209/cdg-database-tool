@@ -104,7 +104,99 @@ function generateQuizAttemptGenderTable(quizData, gender) {
     return data;
 }
 
+/*
 
-// Given the quiz array
-// Will return an array that can be converted to a datatable
-// Containing the question id, and the attempts it took to get it correct
+potential x variables:
+	grade
+	gender
+	state
+
+potential y variables:
+    total correct answers (also total questions attempted)
+	total incorrect answers before getting it correct
+	total questions attempted
+
+*/
+
+function generateTwoAxisHighchartOptions(data, xaxis, yaxis) {
+
+    // getting categories for x axis
+    // loop over quiz_data
+    // break up user name, and depending on what the xaxis equals:
+    // take the 4th index, which is the state
+    // take the 5th index, which is the grade
+    // take the 6th index, which is the gender
+    // if it doesn't already exist in the dict, add it
+
+    let xAxisCategories = [];
+    for (let i = 0; i < data.quiz_data.length; i++) {
+        let user = data.quiz_data[i].user.split("-");
+        if (xaxis == "state" && !xAxisCategories.includes(user[3])) {
+            xAxisCategories.push(user[3]);
+        } else if (xaxis == "grade" && !xAxisCategories.includes(user[4])) {
+            xAxisCategories.push(user[4]);
+        } else if (xaxis == "gender" && !xAxisCategories.includes(user[5])) {
+            xAxisCategories.push(user[5]);
+        }
+    }
+
+    // getting series for y axis
+    // loop over quiz data
+    // take a certain value depending on the y axis, if it's
+    // total correct answers/total questions attemped 
+
+    // break up user name, and depending on what the xaxis equals:
+    // take the 4th index, which is the state
+    // take the 5th index, which is the grade
+    // take the 6th index, which is the gender
+
+    // check if the index equals the x axis, and if it does, add one
+
+    // make a single series
+    // make a series where the name is the xaxis variable chosen
+    // and the data is an array where each index 
+    let mydata = [];
+    for (let i = 0; i < xAxisCategories.length; i++) {
+        mydata.push(0);
+    }
+
+    for (let i = 0; i < data.quiz_data.length; i++) {
+        let user = data.quiz_data[i].user.split("-");
+        let value = 0;
+        if (yaxis == "total_correct") {
+            value = 1; // the player will always get the answer right eventually
+        } else if (yaxis == "total_incorrect") {
+            value = data.quiz_data[i].attempts - 1; // any attempt besides the final correct one is incorrect.
+        }
+
+        for (let j = 0; j < xAxisCategories.length; j++) {
+            if (xAxisCategories[j] == user[3] || xAxisCategories[j] == user[4] || xAxisCategories[j] == user[5]) {
+                mydata[j] += value;
+            }
+        }
+
+    }
+
+    let options = {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: xaxis + " vs " + yaxis
+        },
+        xAxis: {
+            categories: xAxisCategories
+        },
+        yAxis: {
+            title: {
+                text: yaxis
+            }
+        },
+        series: [{
+            name: yaxis,
+            data: mydata
+        }]
+    }
+
+    return options;
+}

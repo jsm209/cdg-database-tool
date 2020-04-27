@@ -3,6 +3,10 @@
 <head>
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
     <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="aggregate.js"></script>
     <link rel="stylesheet" type="text/css" href="index.css">
@@ -18,15 +22,57 @@
             // Default graphs
             drawGenderGradeBarplot();
             drawQuizAttemptGenderBarplot(cdgData.quiz_data, "male");
+            let quizDemographicChart = Highcharts.chart('quiz_demographic_chart', generateTwoAxisHighchartOptions(cdgData, "grade", "total_correct"));
 
             // Event listeners
-            document.getElementById("gender_attempt_select").addEventListener("change", function () {
+            $("gender_attempt_select").addEventListener("change", function () {
                 console.log("change!");
-                drawQuizAttemptGenderBarplot(cdgData.quiz_data, document.getElementById("gender_attempt_select").value);
+                drawQuizAttemptGenderBarplot(cdgData.quiz_data, $("gender_attempt_select").value);
             })
+
+            $("quiz_demographic_select_xaxis").addEventListener("change", function () {
+                quizDemographicChart = Highcharts.chart('quiz_demographic_chart', generateTwoAxisHighchartOptions(cdgData, $("quiz_demographic_select_xaxis").value, $("quiz_demographic_select_yaxis").value));
+
+            })
+
+            $("quiz_demographic_select_yaxis").addEventListener("change", function () {
+                quizDemographicChart = Highcharts.chart('quiz_demographic_chart', generateTwoAxisHighchartOptions(cdgData, $("quiz_demographic_select_xaxis").value, $("quiz_demographic_select_yaxis").value));
+
+            })
+
+            $("quiz_demographic_export").addEventListener("click", function () {
+                let filename = "quiz_demographic_" + $("quiz_demographic_select_xaxis").value + "_vs_ " + $("quiz_demographic_select_yaxis").value;
+                download(filename, quizDemographicChart.getCSV());
+            })
+
+
         });
 
+        //////////////////////
+        // HELPER FUNCTIONS //
+        //////////////////////
 
+        /**
+         * Returns the element that has the ID attribute with the specified value.
+         * @param {string} id - element ID
+         * @returns {object} DOM object associated with id.
+         */
+        function $(id) {
+            return document.getElementById(id);
+        }
+
+        function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
 
 
         ////////////////////////
@@ -63,7 +109,7 @@
             };
 
             // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.BarChart(document.getElementById('gender_grade_chart'));
+            var chart = new google.visualization.BarChart($('gender_grade_chart'));
             chart.draw(data, options);
         }
 
@@ -94,9 +140,12 @@
             };
 
             // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.BarChart(document.getElementById('gender_attempt_chart'));
+            var chart = new google.visualization.BarChart($('gender_attempt_chart'));
             chart.draw(data, options);
         }
+
+
+
 
 
         // Callback that creates and populates a data table,
@@ -126,7 +175,7 @@
             };
 
             // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.BarChart(document.getElementById('demographic_chart'));
+            var chart = new google.visualization.BarChart($('demographic_chart'));
             chart.draw(data, options);
         }
 
@@ -153,10 +202,57 @@
         </div>
 
     </div>
-    
-    
+
+
     <br />
-    
+
+
+    <div class="center">
+        <div>
+            <h2>Quiz Performance vs. Demographic</h2>
+            <p>
+                This plot shows the relationship between performance on quiz questions and
+                a particular player's demographic.
+            </p>
+            <p>X-Axis Variables:</p>
+            <ul>
+                <li><b>State</b> - The state the player self identified with.</li>
+                <li><b>Grade</b> - The grade of study the player self identified with.</li>
+                <li><b>Gender</b> - The gender the player self identified with.</li>
+            </ul>
+            <p>Y-Axis Variables:</p>
+            <ul>
+                <li><b>Total Correct/Total Quizzes</b> - The total number of correct quiz answers for the demographic.
+                    It is also the total amount of quizzes attempted because the player cannot continue in the game
+                    until they get the question correct, and each question only has one correct answer.</li>
+                <li><b>Total Incorrect</b> - The total number of incorrect quiz answers for the demographic.
+                    An incorrect quiz answer is an attempt to answer a question by choosing an incorrect answer.</li>
+            </ul>
+            <div class="chart-controls-flexbox">
+                <div>
+                    <h3>X Axis: </h3>
+                    <select id="quiz_demographic_select_xaxis">
+                        <option value="state">State</option>
+                        <option value="grade">Grade</option>
+                        <option value="gender">Gender</option>
+                    </select>
+                </div>
+                <div>
+                    <h3>Y Axis: </h3>
+                    <select id="quiz_demographic_select_yaxis">
+                        <option value="total_correct">Total Correct/Total Quizzes</option>
+                        <option value="total_incorrect">Total Incorrect</option>
+                    </select>
+                </div>
+                <button id="quiz_demographic_export" class="select">Download CSV</button>
+            </div>
+
+        </div>
+        <div id="quiz_demographic_chart" class="chart"></div>
+    </div>
+
+
+
     <div class="chart-controls-flexbox">
         <div id="gender_grade_chart"></div>
         <div>

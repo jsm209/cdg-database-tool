@@ -21,6 +21,11 @@ select {
     justify-content: space-evenly;
 }
 
+.chart {
+    width: 1000px;
+    height: 400px;
+}
+
 .center {
     margin: auto;
     width: inherit;
