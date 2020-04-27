@@ -1,6 +1,8 @@
 <html>
 
 <head>
+    <link rel="icon" href="images/cdglogosmall.png">
+
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -185,6 +187,7 @@
 <body>
     <div class="center">
         <div class="chart-controls-flexbox">
+            <img src="images/cdglogobig.png" class="logo"/>
             <div>
                 <h1>Central Dogma Game Chart Tool</h1>
                 <p>This is a tool for analyzing the data of The Central Dogma Game for different sessions.</p>
@@ -212,7 +215,8 @@
             <h2>Quiz Performance vs. Demographic</h2>
             <p>
                 This plot shows the relationship between performance on quiz questions and
-                a particular player's demographic.
+                a particular player's demographic. It will only include states, grades, and genders
+                that are present in the current session.
             </p>
             <p>X-Axis Variables:</p>
             <ul>
@@ -244,7 +248,7 @@
                         <option value="total_incorrect">Total Incorrect</option>
                     </select>
                 </div>
-                <button id="quiz_demographic_export" class="select">Download CSV</button>
+                <button id="quiz_demographic_export">Download CSV</button>
             </div>
 
         </div>
