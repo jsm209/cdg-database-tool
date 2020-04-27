@@ -1,0 +1,138 @@
+{
+    "users":[
+       {
+          "username":"admin",
+          "gender":null,
+          "state":null,
+          "grade":null
+       },
+       {
+          "username":"someone",
+          "gender":null,
+          "state":null,
+          "grade":null
+       },
+       {
+          "username":"weiju",
+          "gender":null,
+          "state":null,
+          "grade":null
+       },
+       {
+          "username":"user",
+          "gender":null,
+          "state":null,
+          "grade":null
+       },
+       {
+          "username":"funny-maroon-anteater-wa-9-male-04_07_2020_no_session_id",
+          "gender":"Male",
+          "state":"WA",
+          "grade":"9"
+       }
+    ],
+    "sessions":[
+       {
+          "id":1,
+          "code":"default",
+          "questions":[
+             {
+                "id":3,
+                "type":"multiple choice",
+                "worth":200,
+                "prompt":"Every level you'll be given a challenge question. They can be either drag and drop, or multiple choice formats.",
+                "options":[
+                   {
+                      "id":9,
+                      "num":1,
+                      "content":"Click on the choice to select it"
+                   },
+                   {
+                      "id":10,
+                      "num":2,
+                      "content":"Then click submit to submit it."
+                   },
+                   {
+                      "id":11,
+                      "num":3,
+                      "content":"A, B, and C are wrong."
+                   },
+                   {
+                      "id":12,
+                      "num":4,
+                      "content":"Select me! I'm the right answer."
+                   }
+                ]
+             }
+          ]
+       },
+       {
+          "id":3,
+          "code":"isbretreat2019",
+          "questions":[
+ 
+          ]
+       },
+       {
+          "id":4,
+          "code":"mysession",
+          "questions":[
+             {
+                "id":2,
+                "type":"multiple choice",
+                "worth":200,
+                "prompt":"Every level you'll be given a challenge question. They can be either drag and drop, or multiple choice formats.",
+                "options":[
+                   {
+                      "id":5,
+                      "num":1,
+                      "content":"Click on the choice to select it"
+                   },
+                   {
+                      "id":6,
+                      "num":2,
+                      "content":"Then click submit to submit it."
+                   },
+                   {
+                      "id":7,
+                      "num":3,
+                      "content":"A, B, and C are wrong."
+                   },
+                   {
+                      "id":8,
+                      "num":4,
+                      "content":"Select me! I'm the right answer."
+                   }
+                ]
+             }
+          ]
+       }
+    ],
+    "level_data":[
+       {
+          "finished_at":"2020-04-07 12:40:22",
+          "level":1,
+          "process":1,
+          "speed":42,
+          "rotational":0,
+          "missed":8,
+          "correct":7,
+          "num_errors":0,
+          "num_total":15,
+          "level_num":1,
+          "session":"default",
+          "level_type":"dna_replication",
+          "user":"funny-maroon-anteater-wa-9-male-04_07_2020_no_session_id"
+       }
+    ],
+    "quiz_data":[
+       {
+          "question_id":3,
+          "answered_at":"2020-04-07 12:39:23",
+          "attempts":1,
+          "questions_asked":1,
+          "score":200,
+          "user":"funny-maroon-anteater-wa-9-male-04_07_2020_no_session_id"
+       }
+    ]
+ }
